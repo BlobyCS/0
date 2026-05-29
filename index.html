@@ -3,261 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlobyCZ | Domů</title>
+    <title>BlobyCZ // System Architect</title>
+    
+    <!-- Favicon (Minecraft Face) -->
+    <link rel="icon" type="image/png" href="https://skinmc.net/api/v1/face/username/da4x/600">
+
+    <!-- Frameworky -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg: #050505;
-            --card-bg: rgba(12, 12, 12, 0.7);
+            --bg: #030303;
             --accent: #6366f1;
+            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.05);
         }
-        body {
-            font-family: 'Outfit', sans-serif;
+
+        body { 
+            font-family: 'Inter', sans-serif; 
             background-color: var(--bg);
-            color: #fff;
+            color: #fafafa;
             overflow-x: hidden;
         }
+
         .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Dynamické Mesh pozadí */
-        .mesh-gradient {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
-            z-index: -1;
-        }
-
-        /* 2026 Glass Card */
-        .module-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(40px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 32px;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .module-card:hover {
-            transform: scale(1.02) translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Shine efekt */
-        .module-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.8s;
-        }
-        .module-card:hover::before { left: 200%; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
+        /* Transparent Centered Navbar Pill */
         .nav-pill {
+            position: fixed;
+            top: 24px; left: 50%; transform: translateX(-50%);
             background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 10px 28px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Animated Wave Ornament */
+        .wave-ornament {
+            width: 120px; height: 12px; margin: 24px auto;
+        }
+        .wave-path {
+            stroke: var(--accent); stroke-width: 2.5; fill: none;
+            stroke-dasharray: 100; animation: waveMove 3.5s linear infinite;
+        }
+        @keyframes waveMove { 0% { stroke-dashoffset: 200; } 100% { stroke-dashoffset: 0; } }
+
+        /* Bento Grid Style */
+        .bento-box {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 100%;
+        }
+        .bento-box:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-4px);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8.5rem);
+            font-weight: 800; letter-spacing: -0.06em; line-height: 0.85;
+        }
+
+        /* Contact Pill Styling */
+        .contact-pill {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s ease;
+            text-decoration: none !important;
+            color: #fff !important;
+        }
+        .contact-pill:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+        .contact-pill i {
+            font-size: 1.1rem;
+        }
+
+        .tech-tag {
+            background: rgba(255,255,255,0.05);
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .tech-tag:hover {
+            border-color: var(--accent);
+            color: #fff;
         }
     </style>
 </head>
-<body class="selection:bg-indigo-500/30">
+<body>
 
-    <div class="mesh-gradient"></div>
-
-    <!-- UI 2026 Floating Navbar -->
-    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-[100]">
-        <div class="nav-pill px-8 py-4 rounded-3xl flex items-center gap-10 shadow-2xl">
-            <div class="flex items-center gap-2 group cursor-pointer">
-                <div class="w-2 h-2 bg-indigo-500 rounded-full group-hover:scale-150 transition-transform"></div>
-                <span class="text-sm font-black tracking-tighter mono">BLOBY</span>
-            </div>
-            <div class="h-4 w-[1px] bg-white/10"></div>
-            <div class="flex gap-8">
-                <a href="#o-mne" class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition">O mě</a>
-                <a href="#projekty" class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition">Projekty</a>
-                <a href="#kontakt" class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition">Kontakt</a>
-            </div>
+    <!-- Navbar -->
+    <nav class="nav-pill">
+        <span class="mono font-bold text-white text-sm tracking-tighter">BlobyCZ</span>
+        <div class="h-4 w-[1px] bg-white/10"></div>
+        <div class="flex gap-8 text-[11px] uppercase tracking-widest font-bold text-white/40">
+            <a href="#home" class="hover:text-white transition no-underline">Domů</a>
+            <a href="#about" class="hover:text-white transition no-underline">O mně</a>
+            <a href="#projekty" class="hover:text-white transition no-underline">Projekty</a>
+            <a href="#contact" class="hover:text-white transition no-underline">Kontakt</a>
         </div>
     </nav>
 
-    <main class="max-w-[1400px] mx-auto px-6 pt-44 pb-20">
-        
-        <!-- Hero Section: Typography Focus -->
-        <section class="mb-32 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-10">
-                <span class="relative flex h-2 w-2"><span class="animate-ping absolute h-full w-full rounded-full bg-indigo-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span></span>
-                Available for architecture
-            </div>
-            <h1 class="text-7xl md:text-[120px] font-black tracking-tightest leading-[0.85] mb-12">
-                STAVÍM <span class="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 italic">TICHÝ</span> <br>
-                BACKEND<span class="text-indigo-500">.</span>
-            </h1>
-            <p class="text-slate-400 text-lg md:text-2xl max-w-2xl mx-auto font-light leading-relaxed">
-                Kód není o tom, co vidíš. Je o stabilitě, kterou cítíš, když se <br class="hidden md:block"> 
-                <span class="text-white font-medium italic text-glow">nemusíš o nic starat.</span>
-            </p>
-        </section>
-
-        <!-- UI 2026 Grid System -->
-        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-5 h-auto md:h-[900px]">
-            
-            <!-- Bio Module -->
-            <div id="o-mne" class="module-card md:col-span-2 md:row-span-2 p-12 flex flex-col justify-between">
-                <div class="space-y-6">
-                    <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
-                        <i data-lucide="zap" class="text-indigo-400"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold tracking-tight">BlobyCZ</h2>
-                    <p class="text-slate-400 text-lg leading-relaxed">
-                        Věnuji se backend a server-side vývoji. Stavím stabilní systémy, pracuju s API a zaměřuju se hlavně na logiku a výkon. Dřív jsem dělal Minecraft pluginy a Discord boty, momentálně pracuju hlavně na vlastním enginu.
-            
-                    </p>
-                </div>
-                <div class="flex gap-4">
-                    <span class="px-4 py-2 bg-white/5 rounded-full text-xs font-bold border border-white/10">BRNO, CZ</span>
-                    <span class="px-4 py-2 bg-white/5 rounded-full text-xs font-bold border border-white/10">2024-2026</span>
-                </div>
-            </div>
-
-            <!-- Tech Stack Module -->
-            <div class="module-card md:col-span-2 p-10 flex flex-col justify-center">
-                <div class="flex items-center gap-4 mb-8">
-                    <i data-lucide="box" class="text-indigo-400"></i>
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500 underline underline-offset-8">My Stack</span>
-                </div>
-                <div class="flex flex-wrap gap-4">
-                    <div class="group">
-                        <span class="text-3xl font-bold text-white/40 group-hover:text-white transition-colors duration-500 tracking-tighter">TypeScript</span>
-                        <span class="text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity">/</span>
-                    </div>
-                    <div class="group">
-                        <span class="text-3xl font-bold text-white/40 group-hover:text-white transition-colors duration-500 tracking-tighter">C++</span>
-                        <span class="text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity">/</span>
-                    </div>
-                    <div class="group">
-                        <span class="text-3xl font-bold text-white/40 group-hover:text-white transition-colors duration-500 tracking-tighter">PHP</span>
-                        <span class="text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity">/</span>
-                    </div>
-                    <div class="group">
-                        <span class="text-3xl font-bold text-white/40 group-hover:text-white transition-colors duration-500 tracking-tighter">JavaScript</span>
-                    </div>
-                    <div class="group">
-                        <span class="text-3xl font-bold text-white/40 group-hover:text-white transition-colors duration-500 tracking-tighter">Rust</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project: InsaneKick -->
-            <div id="projekty" class="module-card p-8 group">
-                <div class="h-full flex flex-col justify-between">
-                    <i data-lucide="skull" class="text-slate-600 group-hover:text-red-500 transition-colors" size="32"></i>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">InsaneKick</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed uppercase tracking-widest mono">Minecraft Event Plugin</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project: MessageBot -->
-            <div class="module-card p-8 group">
-                <div class="h-full flex flex-col justify-between">
-                    <i data-lucide="bot" class="text-slate-600 group-hover:text-indigo-400 transition-colors" size="32"></i>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">MessageBot</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed uppercase tracking-widest mono">Discord Infrastructure</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Linux CLI Module -->
-            <div class="module-card md:col-span-2 p-10 flex items-center justify-between bg-indigo-600/5 group">
-                <div class="space-y-2">
-                    <h3 class="text-2xl font-bold italic tracking-tight">pckgi CLI</h3>
-                    <p class="text-slate-500 text-sm italic">Ultra-fast NPM package manager</p>
-                </div>
-                <div class="bg-black/50 p-4 rounded-2xl border border-white/5 mono text-xs text-indigo-400 group-hover:border-indigo-500/50 transition">
-                    $ npm i -g pckgi
-                </div>
-            </div>
-
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+        <div class="mono text-indigo-500 text-[11px] mb-6 tracking-[0.6em] uppercase font-bold" data-aos="fade-down">
+            Backend Architect // 2026
         </div>
+        <h1 class="hero-title mb-4" data-aos="fade-up" data-aos-delay="200">
+            STAVÍM <br> <span class="text-white/20 italic">ARCHITEKTURU</span>
+        </h1>
+        
+        <!-- Animovaná Vlnovka -->
+        <svg class="wave-ornament" viewBox="0 0 100 20">
+            <path class="wave-path" d="M0 10 Q 12.5 0, 25 10 T 50 10 T 75 10 T 100 10" />
+        </svg>
 
-        <!-- Future Connect Section -->
-        <section id="kontakt" class="mt-24 text-center">
-            <div class="module-card p-24 relative">
-                <div class="absolute inset-0 opacity-[0.02]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 30px 30px;"></div>
-                <h2 class="text-5xl md:text-8xl font-black tracking-tighter mb-12 italic">Let's talk code.</h2>
-                
-                <div class="flex flex-col md:flex-row justify-center items-center gap-12">
-                    <a href="https://github.com/Bloby22" class="group">
-                        <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Code Repository</div>
-                        <div class="text-2xl font-bold border-b border-white/10 group-hover:border-indigo-500 transition">GitHub</div>
-                    </a>
-                    <a href="https://instagram.com/blobycz" class="group">
-                        <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Social Feed</div>
-                        <div class="text-2xl font-bold border-b border-white/10 group-hover:border-indigo-500 transition">Instagram</div>
-                    </a>
-                    <div class="group">
-                        <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Direct Message</div>
-                        <div class="text-2xl font-bold text-indigo-400 mono">blobycz</div>
+        <p class="text-white/40 text-lg md:text-xl max-w-2xl mx-auto mt-6 mb-12" data-aos="fade-up" data-aos-delay="400">
+            Pocházím z Brna. Zaměřuji se na budování robustních digitálních systémů s důrazem na čistotu a výkon.
+        </p>
+        <div class="flex gap-4" data-aos="fade-up" data-aos-delay="600">
+            <a href="#projekty" class="px-10 py-3 bg-white text-black rounded-full font-bold hover:scale-105 transition no-underline shadow-lg shadow-white/5">Projekty</a>
+            <a href="#contact" class="px-10 py-3 border border-white/10 rounded-full font-bold hover:bg-white/5 transition no-underline text-white">Kontakt</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 container">
+        <div class="row g-4">
+            <!-- Bio -->
+            <div class="col-lg-8" data-aos="fade-right">
+                <div class="bento-box p-12 flex flex-col justify-between">
+                    <div>
+                        <div class="mono text-indigo-500 text-[10px] mb-6 tracking-widest font-bold uppercase tracking-[0.4em]">Můj příběh</div>
+                        <h2 class="text-4xl font-bold mb-6 italic tracking-tight uppercase text-white">BlobyCZ</h2>
+                        <p class="text-white/50 text-xl leading-relaxed mb-10">
+                           Ahoj, jsem BlobyCZ a pocházím z Brna. Vše začalo tvorbou Discord botů a později Minecraft pluginů, což mi dalo pevné základy logiky. Dnes trávím čas ve <span class="text-white font-bold italic">Visual Studio Code</span>, kde stavím backendové systémy.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">TypeScript</span> <span class="tech-tag">Rust</span> <span class="tech-tag">C++</span>
+                        <span class="tech-tag">PHP</span> <span class="tech-tag">Python</span> <span class="tech-tag">JS</span>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Footer 2026 -->
-        <footer class="mt-32 flex flex-col md:flex-row justify-between items-center gap-8 py-12 border-t border-white/5 opacity-40 hover:opacity-100 transition duration-1000">
-            <div class="mono text-[10px] tracking-[0.5em] uppercase">Built for the future // 2026</div>
-            <div class="flex items-center gap-2">
-                <i data-lucide="heart" size="12" class="text-indigo-500"></i>
-                <span class="text-xs font-bold tracking-tighter">BlobyCZ @ Brno, Czech Republic</span>
+            <!-- Timeline -->
+            <div class="col-lg-4" data-aos="fade-left">
+                <div class="bento-box p-12">
+                    <span class="mono text-[10px] text-white/20 mb-10 uppercase font-bold tracking-widest block italic">Zkušenosti</span>
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-white uppercase text-sm">Backend Developer</span>
+                                <span class="mono text-[9px] text-indigo-400 font-bold">2023-NYNÍ</span>
+                            </div>
+                            <div class="h-[1px] w-full bg-white/5"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-2 text-white/40">
+                                <span class="text-sm">Discord Bot Dev</span>
+                                <span class="mono text-[9px]">2025-26</span>
+                            </div>
+                            <div class="h-[1px] w-full bg-white/5"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center text-white/40">
+                                <span class="text-sm">MC Plugin Dev</span>
+                                <span class="mono text-[9px]">2025-26</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mono text-[10px]">49.1951 N, 16.6068 E</div>
-        </footer>
+        </div>
+    </section>
 
-    </main>
+    <!-- Projekty -->
+    <section id="projekty" class="py-32 container">
+        <h2 class="text-5xl font-black italic mb-20 tracking-tighter uppercase text-center text-white" data-aos="fade-up">Projekty</h2>
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up">
+                <div class="bento-box p-10 flex flex-col">
+                    <i class="fa-solid fa-bolt text-indigo-500 mb-6 text-2xl"></i>
+                    <h3 class="text-2xl font-bold mb-3 tracking-tighter uppercase text-white">InsaneKick</h3>
+                    <p class="text-white/40 text-sm leading-relaxed mb-8 italic flex-grow">Minecraft Plugin pro eventy. Automatický kick při fall damage. Postaveno pro stabilitu.</p>
+                    <a href="https://github.com/Bloby22/InsaneKick" target="_blank" class="text-indigo-400 hover:text-white transition mono text-[10px] font-bold no-underline flex items-center gap-2 uppercase">GitHub Repo <i class="fa-solid fa-arrow-right text-[8px]"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="bento-box p-10 border-indigo-500/20 bg-indigo-500/5 flex flex-col">
+                    <i class="fa-solid fa-box-archive text-indigo-500 mb-6 text-2xl"></i>
+                    <h3 class="text-2xl font-bold mb-3 tracking-tighter uppercase text-white">pckgi</h3>
+                    <p class="text-white/40 text-sm leading-relaxed mb-8 italic flex-grow">API NPM prohlížeč balíčků. Rychlá inspekce závislostí a metadat v Node.js.</p>
+                    <a href="https://github.com/Bloby22/pckgi" target="_blank" class="text-indigo-400 hover:text-white transition mono text-[10px] font-bold no-underline uppercase">GitHub Source</a>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="bento-box p-10 flex flex-col">
+                    <i class="fa-solid fa-file-code text-indigo-500 mb-6 text-2xl"></i>
+                    <h3 class="text-2xl font-bold mb-3 tracking-tighter uppercase text-white">FileCC</h3>
+                    <p class="text-white/40 text-sm leading-relaxed mb-8 italic flex-grow">Konverzní aplikace pro soubory a obrázky. Rychlé zpracování přímo v prohlížeči.</p>
+                    <a href="https://github.com/Bloby22/FileCC" target="_blank" class="text-indigo-400 hover:text-white transition mono text-[10px] font-bold no-underline flex items-center gap-2 uppercase">GitHub Repo <i class="fa-solid fa-arrow-right text-[8px]"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script>
-        // Inicializace ikon
-        lucide.createIcons();
-
-        // Parallax efekt na pozadí podle pohybu myši
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
+    <!-- Kontakt -->
+    <footer id="contact" class="py-40 border-t border-white/5">
+        <div class="container text-center">
+            <h2 class="text-7xl font-black italic mb-16 tracking-tighter uppercase text-white" data-aos="fade-up">Kontakt</h2>
             
-            document.querySelector('.mesh-gradient').style.transform = 
-                `translate(${x * 20}px, ${y * 20}px) scale(1.1)`;
-        });
+            <div class="flex flex-wrap justify-center gap-3 mb-24" data-aos="fade-up" data-aos-delay="200">
+                <!-- GitHub -->
+                <a href="https://github.com/bloby22" target="_blank" class="contact-pill">
+                    <i class="fa-brands fa-github"></i>
+                    <span class="font-bold uppercase text-[11px] tracking-widest">bloby22</span>
+                </a>
+                <!-- Instagram -->
+                <a href="https://instagram.com/blobycz" target="_blank" class="contact-pill">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span class="font-bold uppercase text-[11px] tracking-widest">blobycz</span>
+                </a>
+                <!-- Discord -->
+                <div class="contact-pill cursor-default">
+                    <i class="fa-brands fa-discord"></i>
+                    <span class="font-bold uppercase text-[11px] tracking-widest">@blobycz</span>
+                </div>
+            </div>
+            
+            <p class="mono text-white/20 text-[10px] tracking-[0.5em] uppercase font-bold mt-32">Brno, CZ // &copy; 2026 Architect Build</p>
+        </div>
+    </footer>
 
-        // Intersection Observer pro plynulé objevování modulů
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0) scale(1)";
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.module-card').forEach(card => {
-            card.style.opacity = "0";
-            card.style.transform = "translateY(40px) scale(0.95)";
-            card.style.transition = "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
-            observer.observe(card);
-        });
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
     </script>
 </body>
 </html>
